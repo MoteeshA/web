@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #0e1320;
+    color: #ffffff;
+  }
+  
+  header {
+    background-color: #12182b;
+    padding: 50px 20px;
+  }
+  
+  .hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: auto;
+  }
+  
+  .text {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .image img {
+    width: 280px;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    line-height: 1.2;
+  }
+  
+  .highlight {
+    color: #21d99b;
+  }
+  
+  .discord {
+    color: #7289da;
+  }
+  
+  p {
+    margin-top: 10px;
+    line-height: 1.6;
+    color: #bbb;
+  }
+  
+  .cta {
+    display: inline-block;
+    margin-top: 20px;
+    background: #8e44ec;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  .cta:hover {
+    background: #9b59b6;
+  }
+  
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 0 20px;
+  }
+  
+  .feature-card {
+    padding: 25px;
+    border-radius: 15px;
+    background: #1b2236;
+    border: 1px solid #333;
+  }
+  
+  .feature-card h2 {
+    margin-top: 0;
+  }
+  
+  .purple {
+    border-left: 6px solid #9b59b6;
+  }
+  .blue {
+    border-left: 6px solid #3498db;
+  }
+  .green {
+    border-left: 6px solid #2ecc71;
+  }
+  .gray {
+    border-left: 6px solid #bdc3c7;
+  }
+  
+  .commands {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 0 20px;
+  }
+  
+  .commands h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .commands ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .commands li {
+    padding: 12px 18px;
+    margin-bottom: 10px;
+    background-color: #1a1f2f;
+    border-radius: 10px;
+    font-size: 1.1em;
+    border-left: 4px solid #8e44ec;
+  }
+  
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+    font-size: 0.9em;
+    background: #10141f;
+  }
+  

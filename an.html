@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Riya Bot | Discord Music Bot</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #8e44ec;
+      --primary-hover: #9b59b6;
+      --discord: #7289da;
+      --accent: #21d99b;
+      --dark: #0e1320;
+      --darker: #0a0e18;
+      --dark-alt: #12182b;
+      --light: #ffffff;
+      --gray: #bbb;
+      --card-bg: #1b2236;
+      --glass: rgba(255, 255, 255, 0.05);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Smooth scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--darker);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-hover);
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--darker) 0%, var(--dark-alt) 100%);
+      padding: 100px 20px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--glass);
+    }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(142, 68, 236, 0.1) 0%, rgba(142, 68, 236, 0) 70%);
+      z-index: 0;
+      animation: pulse 15s ease infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.1; }
+      50% { transform: scale(1.2); opacity: 0.15; }
+    }
+    
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      gap: 40px;
+    }
+    
+    .text {
+      flex: 1;
+      padding: 20px;
+      min-width: 300px;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: slideUpFadeIn 1s forwards 0.3s;
+    }
+    
+    .image {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: slideUpFadeIn 1s forwards 0.5s;
+    }
+    
+    @keyframes slideUpFadeIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    .image::before {
+      content: '';
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+      filter: blur(60px);
+      opacity: 0.15;
+      z-index: -1;
+      animation: glowPulse 8s ease infinite;
+    }
+    
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50% { opacity: 0.25; transform: scale(1.1); }
+    }
+    
+    .image img {
+      max-width: 100%;
+      height: auto;
+      filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4));
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+      border-radius: 12px;
+    }
+    
+    .image:hover img {
+      transform: translateY(-10px) scale(1.03);
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+    }
+    
+    h1 {
+      font-size: 2.8rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--light) 0%, var(--accent) 50%, var(--discord) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: gradientShift 8s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+    
+    .highlight {
+      color: var(--accent);
+    }
+    
+    .discord {
+      color: var(--discord);
+    }
+    
+    p {
+      margin-top: 1rem;
+      color: var(--gray);
+      font-size: 1.1rem;
+      max-width: 600px;
+      line-height: 1.7;
+      transition: all 0.3s ease;
+    }
+    
+    .text:hover p {
+      color: var(--light);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+    
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2rem;
+      background: var(--primary);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px -6px var(--primary);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+    }
+    
+    .cta:hover {
+      background: var(--primary-hover);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 30px -8px var(--primary);
+    }
+    
+    .cta::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+    
+    .cta:hover::after {
+      transform: translateX(100%);
+    }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 20px;
+      position: relative;
+    }
+    
+    .feature-card {
+      padding: 30px;
+      border-radius: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--glass);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      backdrop-filter: blur(5px);
+      transform: perspective(1000px) rotateY(15deg);
+      transform-origin: left;
+      opacity: 0;
+    }
+    
+    .feature-card:nth-child(1) { animation: cardAppear 0.8s forwards 0.2s; }
+    .feature-card:nth-child(2) { animation: cardAppear 0.8s forwards 0.4s; }
+    .feature-card:nth-child(3) { animation: cardAppear 0.8s forwards 0.6s; }
+    .feature-card:nth-child(4) { animation: cardAppear 0.8s forwards 0.8s; }
+    
+    @keyframes cardAppear {
+      to {
+        opacity: 1;
+        transform: perspective(1000px) rotateY(0);
+      }
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+      z-index: -1;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .feature-card h2 {
+      margin: 0 0 1rem 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover h2 {
+      transform: translateX(5px);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+    
+    .feature-card p {
+      font-size: 1rem;
+      margin: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover p {
+      transform: translateX(5px);
+    }
+    
+    .purple {
+      border-top: 4px solid #9b59b6;
+    }
+    
+    .blue {
+      border-top: 4px solid #3498db;
+    }
+    
+    .green {
+      border-top: 4px solid #2ecc71;
+    }
+    
+    .gray {
+      border-top: 4px solid #bdc3c7;
+    }
+    
+    .commands {
+      max-width: 800px;
+      margin: 100px auto;
+      padding: 0 20px;
+      position: relative;
+    }
+    
+    .commands h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      animation: titleAppear 1s forwards 0.5s;
+    }
+    
+    @keyframes titleAppear {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+    
+    .commands h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to right, transparent, var(--primary), transparent);
+      border-radius: 3px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+    
+    .commands h2:hover::after {
+      transform: scaleX(1);
+    }
+    
+    .commands ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .commands li {
+      padding: 18px 25px;
+      margin-bottom: 15px;
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      font-size: 1.1rem;
+      border-left: 4px solid var(--primary);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--glass);
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    
+    .commands li:nth-child(1) { animation: listItemAppear 0.6s forwards 0.6s; }
+    .commands li:nth-child(2) { animation: listItemAppear 0.6s forwards 0.8s; }
+    .commands li:nth-child(3) { animation: listItemAppear 0.6s forwards 1.0s; }
+    .commands li:nth-child(4) { animation: listItemAppear 0.6s forwards 1.2s; }
+    .commands li:nth-child(5) { animation: listItemAppear 0.6s forwards 1.4s; }
+    .commands li:nth-child(6) { animation: listItemAppear 0.6s forwards 1.6s; }
+    .commands li:nth-child(7) { animation: listItemAppear 0.6s forwards 1.8s; }
+    
+    @keyframes listItemAppear {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .commands li:hover {
+      transform: translateX(10px) scale(1.02);
+      background-color: #222a40;
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .commands code {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      margin-right: 10px;
+      color: var(--accent);
+      transition: all 0.3s ease;
+    }
+    
+    .commands li:hover code {
+      background: rgba(0, 0, 0, 0.5);
+      transform: scale(1.05);
+    }
+    
+    /* About Me Section */
+    .about-me {
+      max-width: 800px;
+      margin: 100px auto;
+      padding: 40px;
+      background: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid var(--glass);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transform: scale(0.95);
+      opacity: 0;
+      animation: scaleIn 0.8s forwards 1s;
+    }
+    
+    @keyframes scaleIn {
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
+    .about-me::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+      z-index: -1;
+    }
+    
+    .about-me h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      transition: all 0.3s ease;
+    }
+    
+    .about-me:hover h2 {
+      transform: translateY(-5px);
+      text-shadow: 0 0 15px rgba(33, 217, 155, 0.4);
+    }
+    
+    .about-me h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--light);
+      transition: all 0.3s ease;
+    }
+    
+    .about-me:hover h3 {
+      transform: translateY(-3px);
+    }
+    
+    .about-me p {
+      margin-bottom: 1.5rem;
+      color: var(--gray);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .about-me:hover p {
+      color: var(--light);
+    }
+    
+    .linkedin-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #0077b5;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: 1rem;
+      transform: translateY(0);
+    }
+    
+    .linkedin-btn:hover {
+      background: #006097;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 119, 181, 0.3);
+    }
+    
+    .linkedin-btn i {
+      margin-right: 8px;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .linkedin-btn:hover i {
+      transform: scale(1.2);
+    }
+    
+    /* Discord button with icon */
+    .discord-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--discord);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: 1rem;
+      margin-left: 10px;
+      transform: translateY(0);
+    }
+    
+    .discord-btn:hover {
+      background: #677bc4;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(114, 137, 218, 0.3);
+    }
+    
+    .discord-btn i {
+      margin-right: 8px;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .discord-btn:hover i {
+      transform: scale(1.2);
+    }
+    
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: var(--gray);
+      font-size: 0.9rem;
+      background: var(--darker);
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 1s forwards 1.2s;
+    }
+    
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+    }
+    
+    /* Floating animation */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    /* Music note animations */
+    .music-note {
+      position: absolute;
+      opacity: 0;
+      font-size: 1.5rem;
+      color: var(--accent);
+      animation: floatNote 4s linear infinite;
+      z-index: -1;
+    }
+    
+    @keyframes floatNote {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    /* New background animations */
+    .bg-circle {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.1;
+      z-index: -1;
+      animation: float 15s ease-in-out infinite;
+    }
+    
+    .circle-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--primary);
+      top: 10%;
+      left: 5%;
+      animation-delay: 0s;
+    }
+    
+    .circle-2 {
+      width: 400px;
+      height: 400px;
+      background: var(--accent);
+      bottom: 10%;
+      right: 5%;
+      animation-delay: 2s;
+      animation-duration: 18s;
+    }
+    
+    .circle-3 {
+      width: 200px;
+      height: 200px;
+      background: var(--discord);
+      top: 50%;
+      left: 30%;
+      animation-delay: 4s;
+      animation-duration: 12s;
+    }
+    
+    .particle {
+      position: fixed;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      z-index: -1;
+      animation: particleMove linear infinite;
+    }
+    
+    @keyframes particleMove {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px);
+        opacity: 0;
+      }
+    }
+    
+    .pulse-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      z-index: -1;
+      animation: pulseDot 2s ease-out infinite;
+      opacity: 0;
+    }
+    
+    @keyframes pulseDot {
+      0% {
+        transform: scale(0.1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+    
+    .wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%238e44ec" opacity=".25"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%238e44ec" opacity=".5"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%238e44ec"/></svg>');
+      background-size: cover;
+      background-repeat: no-repeat;
+      z-index: -1;
+      opacity: 0.1;
+    }
+    
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      animation: rippleEffect 6s linear infinite;
+      z-index: -1;
+    }
+    
+    @keyframes rippleEffect {
+      0% {
+        transform: scale(0.1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .text {
+        margin-bottom: 2rem;
+      }
+      
+      .commands li {
+        font-size: 1rem;
+        padding: 15px 20px;
+      }
+      
+      .about-me {
+        padding: 30px 20px;
+      }
+      
+      .feature-card {
+        transform: perspective(1000px) rotateY(0) !important;
+      }
+      
+      .circle-1, .circle-2, .circle-3 {
+        display: none;
+      }
+    }
+  </style>
+  <!-- Font Awesome for LinkedIn icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <!-- Background elements -->
+  <div class="bg-circle circle-1"></div>
+  <div class="bg-circle circle-2"></div>
+  <div class="bg-circle circle-3"></div>
+  
+  <!-- Floating music notes -->
+  <div id="musicNotes"></div>
+  
+  <!-- Wave at bottom -->
+  <div class="wave"></div>
+  
+  <header>
+    <div class="hero">
+      <div class="text">
+        <h1>A Smarter Way To Enjoy <span class="highlight">Music</span> On <span class="discord">Discord</span></h1>
+        <p>Riya Bot lets you play high-quality YouTube music with simple commands. Just join a voice channel, play a mood or specific song, and let the bot handle the rest. Built with ❤️ for community music sessions.</p>
+        <a href="https://discord.com/oauth2/authorize?client_id=1367539565635567697&permissions=67584&integration_type=0&scope=bot" target="_blank" class="cta">
+          <i class="fab fa-discord" style="margin-right: 8px;"></i> Add Riya Bot to your server
+        </a>
+      </div>
+      <div class="image">
+        <img src="ChatGPT Image May 2, 2025 at 11_43_02 PM.png" alt="Discord + Music Logo" class="floating">
+      </div>
+    </div>
+  </header>
+
+  <section class="features">
+    <div class="feature-card purple">
+      <h2>💜 Easy to Use</h2>
+      <p>No complicated commands. Just type <code>!play</code>, <code>!mood happy</code>, or <code>!join</code> and let Riya handle the music.</p>
+    </div>
+    <div class="feature-card blue">
+      <h2>🚀 Blazingly Fast</h2>
+      <p>Built with Python and asynchronous handling for minimal delays. Queueing and skipping are instant and smooth.</p>
+    </div>
+    <div class="feature-card green">
+      <h2>🎧 Free Forever</h2>
+      <p>No premium paywalls, no ads. All features are 100% free as long as you bring your own YouTube/Spotify links.</p>
+    </div>
+    <div class="feature-card gray">
+      <h2>🔓 Open Source</h2>
+      <p>Fully open source. Review, fork, or contribute via GitHub. We love transparency and community-driven features.</p>
+    </div>
+  </section>
+
+  <section class="commands">
+    <h2>📜 Commands</h2>
+    <ul>
+      <li><code>!join</code> — Join your voice channel</li>
+      <li><code>!play [url]</code> — Play or queue a song</li>
+      <li><code>!mood [happy|sad|focus]</code> — Auto-play music by mood</li>
+      <li><code>!skip</code> — Skip current song</li>
+      <li><code>!stop</code> — Stop music and clear queue</li>
+      <li><code>!nowplaying</code> — Show current song</li>
+      <li><code>!leave</code> — Disconnect the bot</li>
+    </ul>
+  </section>
+
+  <!-- New About Me Section -->
+  <section class="about-me">
+    <h2>About The Developer</h2>
+    <h3>Riya Singh</h3>
+    <h4>Computer Science Engineer</h4>
+    <p>Creator of Riya Bot and passionate about building innovative solutions that enhance digital experiences.</p>
+    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+      <a href="https://www.linkedin.com/in/riya-singh-b04b31254/" class="linkedin-btn" target="_blank">
+        <i class="fab fa-linkedin-in"></i> Connect on LinkedIn
+      </a>
+      <a href="https://discord.com/oauth2/authorize?client_id=1367539565635567697&permissions=67584&integration_type=0&scope=bot" class="discord-btn" target="_blank">
+        <i class="fab fa-discord"></i> Add to Discord
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Riya Bot. Built for Discord music lovers.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Create floating music notes
+      function createMusicNotes() {
+        const notes = ['♪', '♫', '♩', '♬', '♭', '♮'];
+        const container = document.getElementById('musicNotes');
+        
+        for (let i = 0; i < 12; i++) {
+          const note = document.createElement('div');
+          note.className = 'music-note';
+          note.textContent = notes[Math.floor(Math.random() * notes.length)];
+          note.style.left = `${Math.random() * 100}%`;
+          note.style.top = `${Math.random() * 100}%`;
+          note.style.animationDelay = `${Math.random() * 5}s`;
+          container.appendChild(note);
+        }
+      }
+      
+      // Create floating particles
+      function createParticles() {
+        const container = document.body;
+        
+        for (let i = 0; i < 30; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.width = `${Math.random() * 5 + 1}px`;
+          particle.style.height = particle.style.width;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.top = `${Math.random() * 100 + 100}%`;
+          particle.style.opacity = Math.random() * 0.5;
+          particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+          particle.style.animationDelay = `${Math.random() * 5}s`;
+          container.appendChild(particle);
+        }
+      }
+      
+      // Create ripple effects
+      function createRipples() {
+        const sections = document.querySelectorAll('section');
+        
+        sections.forEach(section => {
+          for (let i = 0; i < 3; i++) {
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.width = `${Math.random() * 200 + 50}px`;
+            ripple.style.height = ripple.style.width;
+            ripple.style.left = `${Math.random() * 100}%`;
+            ripple.style.top = `${Math.random() * 100}%`;
+            ripple.style.animationDelay = `${Math.random() * 6}s`;
+            section.appendChild(ripple);
+          }
+        });
+      }
+      
+      // Create pulse dots
+      function createPulseDots() {
+        const features = document.querySelector('.features');
+        
+        for (let i = 0; i < 5; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'pulse-dot';
+          dot.style.left = `${Math.random() * 100}%`;
+          dot.style.top = `${Math.random() * 100}%`;
+          dot.style.animationDelay = `${Math.random() * 2}s`;
+          features.appendChild(dot);
+        }
+      }
+      
+      createMusicNotes();
+      createParticles();
+      createRipples();
+      createPulseDots();
+      
+      // Enhanced animation trigger with modern IntersectionObserver
+      const animateElements = document.querySelectorAll('.animate__animated');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = 1;
+            entry.target.classList.add(entry.target.dataset.animate);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      
+      // Modern ripple effect for CTA button
+      const cta = document.querySelector('.cta');
+      if (cta) {
+        cta.addEventListener('click', function(e) {
+          // Create ripple element
+          const ripple = document.createElement('div');
+          ripple.style.position = 'absolute';
+          ripple.style.borderRadius = '50%';
+          ripple.style.transform = 'scale(0)';
+          ripple.style.animation = 'ripple 600ms linear';
+          ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+          ripple.style.pointerEvents = 'none';
+          
+          // Position ripple
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size/2;
+          const y = e.clientY - rect.top - size/2;
+          
+          ripple.style.width = `${size}px`;
+          ripple.style.height = `${size}px`;
+          ripple.style.left = `${x}px`;
+          ripple.style.top = `${y}px`;
+          
+          this.appendChild(ripple);
+          
+          // Remove ripple after animation
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      }
+      
+      // Add parallax effect to header
+      window.addEventListener('scroll', () => {
+        const scrollPosition = window.scrollY;
+        const header = document.querySelector('header');
+        if (header) {
+          header.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+        }
+        
+        // Animate background circles
+        const circles = document.querySelectorAll('.bg-circle');
+        circles.forEach((circle, index) => {
+          circle.style.transform = `translateY(${scrollPosition * 0.1 * (index + 1)}px)`;
+        });
+      });
+      
+      // Add hover effect to feature cards
+      const featureCards = document.querySelectorAll('.feature-card');
+      featureCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const angleX = (y - centerY) / 20;
+          const angleY = (centerX - x) / 20;
+          
+          card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.03)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        });
+      });
+      
+      // Add subtle movement to background circles on mouse move
+      document.addEventListener('mousemove', (e) => {
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        
+        const circles = document.querySelectorAll('.bg-circle');
+        circles.forEach((circle, index) => {
+          const moveX = (x - 0.5) * 50 * (index + 1);
+          const moveY = (y - 0.5) * 50 * (index + 1);
+          circle.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
